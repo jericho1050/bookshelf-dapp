@@ -41,6 +41,7 @@ contract BookShelf {
     /// they own.
     /// Maybe author has multiple addresses? Who knows 🤷
     mapping(address => BookMetadata[]) private authorBooks;
+    mapping(address => uint256[]) private userOwnedBooks; // Mapping to track user-owned books
 
     /// The address of the author with payable characteristic
     /// to allow ETH as payment
@@ -98,10 +99,16 @@ contract BookShelf {
         return authorBooks[author];
     }
 
-    function buyBook(uint256 bookId) external payable {
-        require(bookId > 0 && bookId <= authorBooks[author].length, "Invalid book ID");
+    function buyBook(uint256 bookId) public payable {
+        require(
+            bookId > 0 && bookId <= authorBooks[author].length,
+            "Invalid book ID"
+        );
         BookMetadata storage book = authorBooks[author][bookId - 1];
-        require(book.status == BookStatus.Available, "Book is not available for sale");
+        require(
+            book.status == BookStatus.Available,
+            "Book is not available for sale"
+        );
         require(msg.value >= book.price, "Insufficient funds to buy the book");
 
         // Transfer the funds to the author
@@ -114,5 +121,17 @@ contract BookShelf {
         if (book.purchase_counter >= 1) {
             book.status = BookStatus.NotAvailable;
         }
+    }
+    function getOwnedBooks() public view returns (BookMetadata[] memory) {
+        uint256[] memory ownedBookIds = userOwnedBooks[msg.sender];
+        BookMetadata[] memory ownedBooks = new BookMetadata[](
+            ownedBookIds.length
+        );
+
+        for (uint256 i = 0; i < ownedBookIds.length; i++) {
+            ownedBooks[i] = authorBooks[author][ownedBookIds[i] - 1];
+        }
+
+        return ownedBooks;
     }
 }

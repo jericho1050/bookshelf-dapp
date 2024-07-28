@@ -1,0 +1,63 @@
+p {
+    margin: 0;
+    padding: 0;
+}
+
+#card-book {
+    background: rgb(117,134,148);
+    background: linear-gradient(129deg, rgba(117,134,148,1) 0%, rgba(96,118,135,1) 69%, rgba(86,126,153,1) 100%);
+    width: 100%;
+    padding: 2em;
+    list-style: none;
+    margin: 1em 0;
+    border-radius: 0.5em;
+    display: grid;
+    grid-template-rows: auto auto 1fr auto;
+    gap: 1em;
+}
+
+#title-book {
+    font-size: 1.6em;
+}
+
+#summary-book {
+    font-size: 1.4em;
+    font-weight: bold;
+}
+
+#time-book {
+    color: #dde3e8;
+}
+
+label[for="pricing-book"] {
+    font-size: large;
+    font-weight: normal;
+}
+
+#pricing-book {
+    font-size: xx-large;
+    font-weight: bolder;
+}
+
+#content-book {
+    margin-top: 1em;
+}
+
+#cta-book {
+    justify-self: start;
+    align-self: end;
+}
+
+@media(min-width: 850px) {
+    .books {
+        display: flex;
+        justify-content: center;
+        column-gap: 10px;
+        flex-wrap: wrap;
+    }
+    .books li {
+        width: 100%;
+        max-width: 500px;
+        flex-grow: 1;
+    }
+}

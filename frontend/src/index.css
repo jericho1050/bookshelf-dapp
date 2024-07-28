@@ -12,6 +12,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
   background-color: #405D72;
   color: #F7E7DC;
+  padding: 1.5em 3em;
 }
 
 h1 {
@@ -31,7 +32,20 @@ h1:nth-child(1)::before {
 
 .container {
   padding: 2em;
-  word-break: break-all;
+  line-height: 2.5em;
+}
+
+.container > h1:nth-child(1) {
+  font-size: 3em;
+}
+.container > div  h1 {
+  font-size: 1.6em;
+}
+.container > div  h1::before {
+  background: unset;
+}
+h2 {
+  word-wrap: break-word;
 }
 
 .form-container {
@@ -45,9 +59,11 @@ label {
   font-size: 1.4em;
   margin-top: 1.4em;
 }
+
 label:last-of-type {
   margin-top: 0.5em;
 }
+
 input,
 select,
 textarea {
@@ -59,14 +75,17 @@ textarea {
   padding: 1em;
   margin-top: 0.5em;
   border: 1.5px solid #FFF8F3;
+  border-radius: 0.5em;
   font-size: large;
 }
 
-input:focus, textarea:focus {
+input:focus,
+textarea:focus {
   outline: #F7E7DC;
   border: 2.2px solid #FFF8F3;
 
 }
+
 button {
   display: block;
   width: 100%;
@@ -89,5 +108,59 @@ button:hover {
     width: 25%;
     font-size: large;
     padding: 0.5em;
+  }
+}
+
+@media (min-width: 1360px) {
+  .container {
+    display: grid;
+    grid-template-areas: 
+      "form text1"
+      "form text2"
+      "form text3"
+      "form text4"
+      "form text5"
+      "form text6"
+      "form text7"
+      "form text8";
+    grid-template-columns: auto-fit 1fr;
+    grid-template-rows: auto; /* Make rows auto-sized based on content */
+    column-gap: 10px;
+    align-items: start;
+  }
+
+  .form-container {
+    grid-area: form;
+  }
+  .container > h1:nth-child(1) {
+    grid-area: text1;
+  }
+  .container > h2:nth-child(2) {
+    grid-area: text2;
+
+  }
+  .container > h2:nth-child(3) {
+    grid-area: text3;
+
+  }
+  .container > h2:nth-child(4) {
+    grid-area: text4;
+
+  }
+  .container > div {
+    grid-area: text5;
+
+
+  }
+  .container > div + h1 {
+    grid-area: text6;
+
+  }
+  .container > h2:nth-of-type(4) {
+    grid-area: text7;
+
+  }
+  .container > h2:nth-of-type(5) {
+    grid-area: text8;
   }
 }
