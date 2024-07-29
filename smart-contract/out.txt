@@ -1,0 +1,42 @@
+/Users/jerichowenzel/Desktop/bookshelf-dapp/smart-contract
+├── README.md
+├── artifacts
+|  ├── build-info
+|  |  ├── 89d701f92be31eacb5991519cc89282a.json
+|  |  └── bdca610012ca37bce3a038357aff33fc.json
+|  ├── contracts
+|  |  └── Bookshelf.sol
+|  |     ├── BookShelf.dbg.json
+|  |     └── BookShelf.json
+|  └── hardhat
+|     └── console.sol
+|        ├── console.dbg.json
+|        └── console.json
+├── cache
+|  └── solidity-files-cache.json
+├── contracts
+|  └── Bookshelf.sol
+├── demo.cast
+├── hardhat.config.js
+├── ignition
+|  ├── deployments
+|  |  ├── chain-11155111
+|  |  |  ├── artifacts
+|  |  |  ├── build-info
+|  |  |  ├── deployed_addresses.json
+|  |  |  └── journal.jsonl
+|  |  └── chain-31337
+|  |     ├── artifacts
+|  |     ├── build-info
+|  |     ├── deployed_addresses.json
+|  |     └── journal.jsonl
+|  └── modules
+|     └── BookShelf.js
+├── package-lock.json
+├── package.json
+└── test
+   └── Lock.js
+
+directory: 1215 file: 6267
+
+ignored: directory (106)
