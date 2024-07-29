@@ -160,3 +160,5 @@ directory: 1781 file: 5294
 ignored: directory (167)
 
 ```
+
+### Discord Username: jericho1050
