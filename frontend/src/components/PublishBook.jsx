@@ -19,7 +19,9 @@ const PublishBook = ({ author }) => {
     price_: 0,
     bookstatus_: 0,
   });
-  const isAuthor = useActiveAccount()?.address === author;
+  const account = useActiveAccount();
+  const isAuthor = account?.address === author;
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -59,14 +61,14 @@ const PublishBook = ({ author }) => {
     return (
       <>
         <h1>Welcome to my humble abode!</h1>
-        <BookList isPublishTransacted={true} />
+        <BookList isPublishTransacted={true} account={account} />
       </>
     );
   }
 
   return (
     <>
-      <BookList isPublishTransacted={transactReceipt?.status === "success"} />
+      {/* <BookList isPublishTransacted={transactReceipt?.status === "success"} /> */}
       <h1>Publishing a new book? Go here!</h1>
       <h2>🥴 Requires author-ization. No pun intended 🤣</h2>
       <h2>

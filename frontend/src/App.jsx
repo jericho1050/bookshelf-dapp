@@ -38,17 +38,18 @@ const wallets = [
   createWallet("app.phantom"),
   createWallet("me.rainbow"),
 ];
+
 // Our first smart contract on the network
 export const contract1 = getContract({
   client,
-  chain: hardhat,// sepolia,
-  address: "0x5FbDB2315678afecb367f032d93F642f64180aa3",// "0xc116C79dfcd0E7a01e43665F2FA9aFad5F6b2cfD", // if it's hardhat then local dev mode
+  chain: hardhat,// sepolia or hardhat,
+  address: "0x5FbDB2315678afecb367f032d93F642f64180aa3",// "0xc116C79dfcd0E7a01e43665F2FA9aFad5F6b2cfD for seploia testnet", // if it's hardhat then local dev mode 0x5FbDB2315678afecb367f032d93F642f64180aa3
   abi: contractData.abi,
 });
 // Our second smart contract on the network
 export const contract2 = getContract({
   client,
-  chain: hardhat, // sepolia,
+  chain: hardhat, // sepolia or hardhat,
   address: "0x9fE46736679d2D9a65F0992F2272dE9f3c7fa6e0", 
   abi: contractData.abi,
 });
@@ -58,7 +59,6 @@ const App = () => {
   // We also want to know who the author
   // of the contracts are
   const [author, setAuthor] = useState(undefined);
-  
   useEffect(() => {
     const handleAuthor = async () => {
       const author = await readContract({
@@ -75,7 +75,7 @@ const App = () => {
       <ThirdwebProvider>
         <AppBase author={author} />
         <ConnectEmbed
-          chain={sepolia}
+          chain={hardhat} // sepolia or hardhat?
           modalSize={"wide"}
           client={client}
           wallets={wallets}

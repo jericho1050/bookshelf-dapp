@@ -1,6 +1,8 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.4;
 
+
+
 /// Function of the `BookShelf` smart contract
 /// 1. Author publishes book and can add more books
 /// Bounty (?)
@@ -41,7 +43,8 @@ contract BookShelf {
     /// they own.
     /// Maybe author has multiple addresses? Who knows 🤷
     mapping(address => BookMetadata[]) private authorBooks;
-    mapping(address => uint256[]) private userOwnedBooks; // Mapping to track user-owned books
+     // Mapping to track user-owned books
+     mapping(address => BookMetadata[]) private userOwnedBooks;
 
     /// The address of the author with payable characteristic
     /// to allow ETH as payment
@@ -109,29 +112,21 @@ contract BookShelf {
             book.status == BookStatus.Available,
             "Book is not available for sale"
         );
-        require(msg.value >= book.price, "Insufficient funds to buy the book");
 
-        // Transfer the funds to the author
-        author.transfer(msg.value);
+        // Check if the book is free
+        if (book.price > 0) {
+            require(msg.value >= book.price, "Insufficient funds to buy the book");
+            author.transfer(msg.value);
+        }
 
-        // Update the book's purchase counter
-        book.purchase_counter += 1;
-
-        // If the book is sold out, update its status
-        if (book.purchase_counter >= 1) {
+        book.purchase_counter -= 1;
+        if (book.purchase_counter == 0) {
             book.status = BookStatus.NotAvailable;
         }
+        userOwnedBooks[msg.sender].push(book);
     }
-    function getOwnedBooks() public view returns (BookMetadata[] memory) {
-        uint256[] memory ownedBookIds = userOwnedBooks[msg.sender];
-        BookMetadata[] memory ownedBooks = new BookMetadata[](
-            ownedBookIds.length
-        );
 
-        for (uint256 i = 0; i < ownedBookIds.length; i++) {
-            ownedBooks[i] = authorBooks[author][ownedBookIds[i] - 1];
-        }
-
-        return ownedBooks;
-    }
+    function getOwnedBooks(address user) public view returns (BookMetadata[] memory) {
+        return userOwnedBooks[user];
+}
 }

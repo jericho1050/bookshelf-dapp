@@ -33,6 +33,7 @@ h1:nth-child(1)::before {
 .container {
   padding: 2em;
   line-height: 2.5em;
+
 }
 
 .container > h1:nth-child(1) {
@@ -122,7 +123,8 @@ button:hover {
       "form text5"
       "form text6"
       "form text7"
-      "form text8";
+      "form text8"
+      "form text9";
     grid-template-columns: auto-fit 1fr;
     grid-template-rows: auto; /* Make rows auto-sized based on content */
     column-gap: 10px;
@@ -134,6 +136,7 @@ button:hover {
   }
   .container > h1:nth-child(1) {
     grid-area: text1;
+
   }
   .container > h2:nth-child(2) {
     grid-area: text2;
@@ -149,18 +152,22 @@ button:hover {
   }
   .container > div {
     grid-area: text5;
-
-
+    margin-top: 1.5em;
   }
+  /* Published titles and the lists of books are rendered as one so yeah */
   .container > div + h1 {
-    grid-area: text6;
+    margin-top: -0.5em;
+    grid-area: text5;
 
   }
   .container > h2:nth-of-type(4) {
     grid-area: text7;
-
   }
   .container > h2:nth-of-type(5) {
     grid-area: text8;
   }
+  .container > div:last-child {
+    grid-area: text9;
+  }
+  
 }

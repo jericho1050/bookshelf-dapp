@@ -49,15 +49,21 @@ label[for="pricing-book"] {
 }
 
 @media(min-width: 850px) {
-    .books {
+    #card-book {
+        margin: 0;
+    }
+    ul.books, ul#card-books {
         display: flex;
         justify-content: center;
-        column-gap: 10px;
+        gap: 10px;
         flex-wrap: wrap;
+        padding: 0;
+
     }
-    .books li {
+    ul.books li,  ul#card-books li{
         width: 100%;
-        max-width: 500px;
+        flex: 40%;
         flex-grow: 1;
     }
+    
 }

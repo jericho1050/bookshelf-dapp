@@ -4,10 +4,13 @@ import { readContract, prepareContractCall } from "thirdweb";
 import { Buffer } from "buffer";
 import { contract1 } from "../App.jsx";
 import { useSendTransaction } from "thirdweb/react";
+import OwnedBooks from "./OwnedBooks.jsx";
 
-const BookList = ({ isPublishTransacted }) => {
+const BookList = ({ isPublishTransacted, account }) => {
   const [bookList, setBookList] = useState([]);
   const { mutate: sendTransaction } = useSendTransaction();
+  const [bookPurchased, setBookPurchased] = useState(0);
+
 
   useEffect(() => {
     if (isPublishTransacted) {
@@ -48,43 +51,51 @@ const BookList = ({ isPublishTransacted }) => {
 
   const handleBuyBook = async (bookIndex) => {
     try {
-      const books = await readContract({
-        contract: contract1,
-        method: "getAuthorBooks",
-      });
-      const book = books[bookIndex];
-      console.log("Contract ABI:", contract1.abi);
-      console.log("Available methods in ABI:", contract1.abi.map(item => item.name));
-      console.log("Book details:", book);
-  
-      if (BigInt(book.price) === BigInt(0)) {
-        console.log("Book is free. No transaction needed.");
-        // Handle the case where the book is free
-        // For example, you might want to open the modal directly or perform another action
-        // openModal(book); // Example function to open the modal
-        return;
-      }
-  
-      const transaction = await prepareContractCall({
-        contract: contract1,
-        method: "buyBook",
-        params: [book.bookId],
-        value: BigInt(book.price), // Ensure price is a BigInt
-        gasLimit: 3000000, // Set a higher gas limit
-      });
-      console.log("Prepared transaction:", transaction);
-      sendTransaction(transaction);
-  
+        const books = await readContract({
+            contract: contract1,
+            method: "getAuthorBooks",
+        });
+        const book = books[bookIndex];
+        console.log("Contract ABI:", contract1.abi);
+        console.log("Available methods in ABI:", contract1.abi.map(item => item.name));
+        console.log("Book details:", book);
+
+        // Ensure price is a BigInt, even if it's 0
+        const price = BigInt(book.price);
+
+        const transaction = await prepareContractCall({
+            contract: contract1,
+            method: "buyBook",
+            params: [book.bookId],
+            value: price, // Ensure price is a BigInt
+            gasLimit: 3000000, // Set a higher gas limit
+        });
+        console.log("Prepared transaction:", transaction);
+
+        // Check if the transaction is prepared correctly
+        if (transaction) {
+            sendTransaction(transaction);
+            setBookPurchased(prevState => !prevState);
+        } else {
+            console.error("Transaction preparation failed.");
+        }
+
     } catch (error) {
-      console.error("Error preparing or sending transaction:", error);
+        console.error("Error preparing or sending transaction:", error);
     }
-  };
+};
 
   return (
-    <div>
-      <h1>Author&rsquo;s Published Titles</h1>
-      <ul className="books">{bookList ? bookList : ""}</ul>
-    </div>
+    <>
+      <div>
+        {account &&
+          (<>        <h1>Author&rsquo;s Published Titles</h1>
+                      <ul className="books">{bookList ? bookList : ""}</ul>
+          </>)
+        }
+      </div>
+      <OwnedBooks account={account} bookPurchased={bookPurchased} setBookPurchased={setBookPurchased} />
+    </>
   );
 };
 

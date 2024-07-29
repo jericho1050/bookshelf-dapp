@@ -17,7 +17,7 @@ const SEPOLIA_PRIVATE_KEY= vars.get("SEPOLIA_PRIVATE_KEY");
 //   }
 // };
 
-// dev enviroment mode
+// dev enviroment mode using hardhat
 module.exports = {
   solidity: "0.8.24",
 

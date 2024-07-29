@@ -31,15 +31,22 @@ module.exports = buildModule("BookShelfDapp", (m) => {
         ]
     );
 
+    // Mock user address
+    const mockUserAddress = "0x8626f6940E2eb28930eFb4CeF49B2d1F2C9C1199";
+
+
+
     // Let's also deploy another smart contract
     // We also add an ID to identify it's a not the other one
-    const newBookShelf = m.contract("BookShelf", [], { id: "newBookShelf" })
+    const newBookShelf = m.contract("BookShelf", [], { id: "newBookShelf" });
 
     // Let's call who's the author of this smart contract
     // but as a read because we don't really want to perform
     // a transaction. We should get the Account #0 as the
     // author
     m.staticCall(newBookShelf, "author", []);
+
+
 
     return { bookshelf, newBookShelf };
 });
